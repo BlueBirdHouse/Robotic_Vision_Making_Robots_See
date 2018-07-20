@@ -16,7 +16,7 @@ The main program is in “TrygetColor.m”.
 
 - Step 3: Find easily localizable points. We use k-means clustering method in “TrygetColor.m”. This algorithm is random. Sometimes, it will find other geometrical figures but the positioning points. In this condition, you can rerun the program. A more stable method for this step is to use “TrygetColor1.m”, which follows a beginner's guide in https://www.mathworks.com/help/images/examples/color-based-segmentation-using-the-l-a-b-color-space.html. However, some positioning points will be lost, whichever way you do it. 
 
-![image](http://note.youdao.com/favicon.ico)
+![image](figs/2.png)
 
 - Step 4: Find all possible quadrilaterals that the known points can form. 
 
@@ -28,12 +28,12 @@ The main program is in “TrygetColor.m”.
 
 - Step 8: Estimate the coordinates of the lost points.
 
-![image](http://note.youdao.com/favicon.ico)
+![image](figs/3.png)
 
 - Step 9: Construct LROIs around the known coordinates and the estimated coordinates.
 
-![image](http://note.youdao.com/favicon.ico)
+![image](figs/4.png)
 
 - Step 10: Find all the positioning points in the LROIs. 
 
-![image](http://note.youdao.com/favicon.ico)
+![image](figs/5.png)
