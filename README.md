@@ -10,7 +10,7 @@ The main program is in “TrygetColor.m”.
 
 - Step 1: Load figures. The figures in “data” directory are extracted from QUT robot arm simulator. All the figures in the directory can be used to test the algorithm. 
 
-![image](http://note.youdao.com/favicon.ico)
+![image](figs/1.png)
 
 - Step 2: Preprocessing. The figure is transformed into Lab color space after adjusting the illumination.  
 
