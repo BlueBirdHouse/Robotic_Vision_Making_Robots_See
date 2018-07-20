@@ -26,7 +26,7 @@ The main program is in “TrygetColor.m”.
 
 - Step 7: Find the new coordinates of easily localizable points. 
 
-- Step 8: Estimate the coordinates of the lost points.
+- Step 8: Estimate the coordinates of the lost points. The associated equations are in "GuessModel.mw".
 
 ![image](figs/3.png)
 
