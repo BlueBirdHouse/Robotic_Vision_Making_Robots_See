@@ -1,14 +1,15 @@
+%% Step 1
 load('./data/fig4.mat')
 figure;
 idisp(image);
 
-%% 图像预处理
+%% Step 2: 图像预处理
 im_gama = igamm(image, 'sRGB');
 image_illuminant = illumgray(im_gama, 0);
 im_gama = chromadapt(im_gama, image_illuminant, 'ColorSpace', 'linear-rgb');
 im_lab = rgb2lab(im_gama);
 
-%% 对图像做二分类，蓝色的会凸显出来，从而获得定位点
+%% Step 3: 对图像做二分类，蓝色的会凸显出来，从而获得定位点
 im_ab = im_lab(:,:,2:3);
 ncols = size(im_ab,2);
 nrows = size(im_ab,1);
@@ -19,7 +20,7 @@ pixel_labels = reshape(cluster_idx,nrows,ncols);
 figure;
 idisp(pixel_labels);
 
-%% 找到暂时可以定位的点，推测不能定位的点的位置
+%% Step 4: 找到暂时可以定位的点，推测不能定位的点的位置
 b = iblobs(pixel_labels);
 b_found = b([b.area] > 100);
 [~,index] = max([b_found.area]);
@@ -51,7 +52,7 @@ for i = 1:1:size(combineBlobs,1)
      polyins = [polyins a_polyin];
 end
 
-%% 寻找四边形内角,并剔除内角变化过大的四边形
+%% Step 5: 寻找四边形内角,并剔除内角变化过大的四边形
 InternalAngle_list = zeros(4,size(polyins,2));
 for i = 1:1:size(polyins,2)
     InternalAngle_list(:,i) = rad2deg(InternalAngle(polyins(i)));
@@ -69,7 +70,7 @@ var_SideLength = var(SideLength_list,0,1);
 same_Length_poly = find(var_SideLength < 300);
 polyins = polyins(1,same_Length_poly);
 
-%% 做初级修正
+%% Step 6: 做初级修正
 %找到最接近原点的四边形
 [polyins_Cx,polyins_Cy] = polyins.centroid;
 polyins_dist = sqrt(polyins_Cx.^2 + polyins_Cy.^2);
@@ -79,7 +80,7 @@ P_model = [270 100 100 270; 100 100 270 270];
 H = homography((zero_polyin.Vertices)',P_model);
 image_fixed = homwarp(H, image,'full');
 
-%再次做分割
+%Step 7: 再次做分割
 %% 填充图像内的NaN信息。
 image = image_fixed;
 image(isnan(image) == true) = 0; 
@@ -101,7 +102,7 @@ pixel_labels = reshape(cluster_idx,nrows,ncols);
 figure;
 idisp(pixel_labels);
 
-%% 找到暂时可以定位的点，推测不能定位的点的位置
+%% Step 8: 找到暂时可以定位的点，推测不能定位的点的位置
 b = iblobs(pixel_labels);
 b_found = b([b.area] > 300);
 [~,index] = max([b_found.area]);
@@ -132,7 +133,7 @@ for i = 1:1:size(combineBlobs,1)
      polyins = [polyins a_polyin];
 end
 
-%% 寻找四边形内角,并剔除内角变化过大的四边形
+%% Step 9: 寻找四边形内角,并剔除内角变化过大的四边形
 InternalAngle_list = zeros(4,size(polyins,2));
 for i = 1:1:size(polyins,2)
     InternalAngle_list(:,i) = rad2deg(InternalAngle(polyins(i)));
@@ -161,7 +162,7 @@ for i = 1:1:size(polyins,2)
     ROI = AROI | ROI;
 end
 
-%% 在ROI基础上重新分类
+%% Step 10: 在ROI基础上重新分类
 %应用Mask
 maskedImage = image;
 maskedImage(repmat(~ROI,[1 1 3])) = 0;
