@@ -36,4 +36,4 @@ The main program is in “TrygetColor.m”.
 
 - Step 10: Find all the positioning points in the LROIs. 
 
-![image](figs/5.png)
+![image](figs/6.png)
